@@ -2,6 +2,8 @@ package com.gta.cars.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,5 +28,6 @@ public class Marca {
     private String inspiracao;
 
     @OneToMany(mappedBy = "marca")
+    @JsonIgnore
     private List<Modelo> modelos;
 }
