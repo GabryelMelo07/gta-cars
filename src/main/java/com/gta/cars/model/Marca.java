@@ -19,7 +19,7 @@ public class Marca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 80, nullable = false)
+    @Column(length = 80, unique = true, nullable = false)
     private String nome;
     
     @Column(length = 80)
