@@ -1,6 +1,9 @@
 package com.gta.cars.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,11 +12,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "marca")
+@Table(name = "modelo")
 @Data
 public class Modelo {
     @Id
@@ -31,7 +35,7 @@ public class Modelo {
     private Classe classe;
 
     @Column
-    private int capacidade;
+    private Integer capacidade;
 
     @Column
     private String imagem;
@@ -39,4 +43,8 @@ public class Modelo {
     @ManyToOne
     @JoinColumn(name = "marca_id")
     private Marca marca;
+
+    @OneToMany(mappedBy = "modelo")
+    @JsonIgnore
+    private List<Carro> carros;
 }

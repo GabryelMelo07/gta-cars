@@ -40,7 +40,7 @@ public class ModeloServiceImpl implements ModeloService {
         Modelo modelo = new Modelo();
         modelo.setNome(dto.nome());
         modelo.setInspiracao(dto.inspiracao());
-        modelo.setClasse(Classe.valueOf(dto.classe()));
+        modelo.setClasse(Classe.valueOf(dto.classe().toUpperCase()));
         modelo.setCapacidade(dto.capacidade());
         modelo.setImagem(dto.imagem());
         modelo.setMarca(marca);
@@ -53,7 +53,7 @@ public class ModeloServiceImpl implements ModeloService {
         Modelo modelo = getById(id);
         modelo.setNome(dto.nome());
         modelo.setInspiracao(dto.inspiracao());
-        modelo.setClasse(Classe.valueOf(dto.classe()));
+        modelo.setClasse(Classe.valueOf(dto.classe().toUpperCase()));
         modelo.setCapacidade(dto.capacidade());
         modelo.setImagem(dto.imagem());
         modelo.setMarca(marca);
