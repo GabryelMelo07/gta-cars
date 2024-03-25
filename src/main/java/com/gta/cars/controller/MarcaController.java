@@ -1,20 +1,14 @@
 package com.gta.cars.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gta.cars.dto.MarcaDTO;
 import com.gta.cars.model.Marca;
 import com.gta.cars.service.interfaces.MarcaService;
 
@@ -26,37 +20,13 @@ public class MarcaController {
     private MarcaService marcaService;
     
     @GetMapping
-    public ResponseEntity<List<Marca>> getAll() {
-        List<Marca> marcas = marcaService.getAll();
-        return ResponseEntity.ok().body(marcas);
+    public ResponseEntity<Page<Marca>> getAll(Pageable pageable) {
+        return ResponseEntity.ok().body(marcaService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Marca> getById(@PathVariable long id) {
-        Marca marca = marcaService.getById(id);
-        return ResponseEntity.ok().body(marca);
-    }
-
-    @PostMapping
-    public ResponseEntity<Marca> save(@RequestBody MarcaDTO marcaDto) {
-        Marca marca = marcaService.save(marcaDto);
-        return ResponseEntity.ok().body(marca);
-    }
-
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Marca> update(@PathVariable long id, @RequestBody MarcaDTO marcaDto) {
-        Marca marca = marcaService.update(id, marcaDto);
-        return ResponseEntity.ok().body(marca);
-    }
-
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable int id) {
-        boolean deletado = marcaService.delete(id);
-
-        if (deletado)
-            return new ResponseEntity<Boolean>(deletado, HttpStatus.OK);
-        else
-            return new ResponseEntity<Boolean>(deletado, HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok().body(marcaService.getById(id));
     }
     
 }
