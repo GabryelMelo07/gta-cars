@@ -1,8 +1,9 @@
 package com.gta.cars.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.gta.cars.dto.CarroDTO;
@@ -28,11 +29,13 @@ public class CarroServiceImpl implements CarroService {
     @Autowired
     private GaragemService garagemService;
     
+    @Cacheable(value = "carros", key = "'pagina_' + #pageable.pageNumber")
     @Override
-    public List<Carro> getAll() {
-        return carroRepository.findAll();
+    public Page<Carro> getAll(Pageable pageable) {
+        return carroRepository.findAll(pageable);
     }
 
+    @Cacheable(value = "carro", key = "#id")
     @Override
     public Carro getById(long id) {
         return carroRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Carro inexistente."));

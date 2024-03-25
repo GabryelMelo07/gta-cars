@@ -1,8 +1,8 @@
 package com.gta.cars.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,27 +26,23 @@ public class GaragemController {
     private GaragemService garagemService;
     
     @GetMapping
-    public ResponseEntity<List<Garagem>> getAll() {
-        List<Garagem> garagems = garagemService.getAll();
-        return ResponseEntity.ok().body(garagems);
+    public ResponseEntity<Page<Garagem>> getAll(Pageable pageable) {
+        return ResponseEntity.ok().body(garagemService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Garagem> getById(@PathVariable long id) {
-        Garagem garagem = garagemService.getById(id);
-        return ResponseEntity.ok().body(garagem);
+        return ResponseEntity.ok().body(garagemService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<Garagem> save(@RequestBody GaragemDTO garagemDto) {
-        Garagem garagem = garagemService.save(garagemDto);
-        return ResponseEntity.ok().body(garagem);
+        return ResponseEntity.ok().body(garagemService.save(garagemDto));
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Garagem> update(@PathVariable long id, @RequestBody GaragemDTO garagemDto) {
-        Garagem garagem = garagemService.update(id, garagemDto);
-        return ResponseEntity.ok().body(garagem);
+        return ResponseEntity.ok().body(garagemService.update(id, garagemDto));
     }
 
     @DeleteMapping("/deletar/{id}")
