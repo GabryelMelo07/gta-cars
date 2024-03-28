@@ -6,5 +6,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.gta.cars.model.Carro;
 
 public interface CarroRepository extends PagingAndSortingRepository<Carro, Long>, CrudRepository<Carro, Long> {
-    
 }

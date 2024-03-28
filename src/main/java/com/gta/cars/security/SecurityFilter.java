@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.gta.cars.repository.UsuarioRepository;
+import com.gta.cars.repository.UserRepository;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,30 +21,32 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
-
+    
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    private UserRepository userRepository;
+    
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
+
         if (token != null) {
             var login = tokenService.validateToken(token);
-            UserDetails usuario = usuarioRepository.findByNomeUsuario(login);
+            UserDetails user = userRepository.findByLogin(login);
 
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);
     }
-
+    
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
+
         if (authHeader == null)
             return null;
+
         return authHeader.replace("Bearer ", "");
     }
-
+    
 }
