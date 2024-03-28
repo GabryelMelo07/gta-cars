@@ -16,6 +16,7 @@ import lombok.Data;
 @Table(name = "carro")
 @Data
 public class Carro {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,4 +32,5 @@ public class Carro {
     @JoinColumn(name = "garagem_id")
     @JsonIgnore
     private Garagem garagem;
+    
 }

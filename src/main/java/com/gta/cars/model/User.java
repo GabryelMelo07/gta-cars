@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,38 +15,50 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuario")
-@Data
+@Table(name = "users")
+@Getter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario implements UserDetails {
-    
+public class User implements UserDetails {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    private String login;
+
+    private String password;
 
     @Column(length = 50, nullable = false)
     private String nome;
 
-    @Column(length = 20, nullable = false)
-    private String nomeUsuario;
-
     @Column(length = 100)
     private String email;
 
-    @Column(length = 50, nullable = false)
-    private String senha;
-
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Garagem> garagens;
+    
+    public User(String login,  String encryptedPassword, String nome, String email) {
+        this.login = login;
+        this.password = encryptedPassword;
+        this.nome = nome;
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("BASIC_USER"));
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
     }
 
     @Override
@@ -70,14 +81,4 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-    @Override
-    public String getUsername() {
-        return nomeUsuario;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-    
 }
