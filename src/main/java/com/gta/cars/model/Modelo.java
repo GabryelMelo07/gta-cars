@@ -20,6 +20,7 @@ import lombok.Data;
 @Table(name = "modelo")
 @Data
 public class Modelo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,4 +48,5 @@ public class Modelo {
     @OneToMany(mappedBy = "modelo")
     @JsonIgnore
     private List<Carro> carros;
+    
 }

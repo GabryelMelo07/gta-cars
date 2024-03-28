@@ -17,6 +17,7 @@ import lombok.Data;
 @Table(name = "garagem")
 @Data
 public class Garagem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,9 +32,10 @@ public class Garagem {
     private String imagem;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "garagem")
     private List<Carro> carros;
+    
 }

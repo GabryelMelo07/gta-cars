@@ -17,6 +17,7 @@ import lombok.Data;
 @Table(name = "marca")
 @Data
 public class Marca {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,4 +31,5 @@ public class Marca {
     @OneToMany(mappedBy = "marca")
     @JsonIgnore
     private List<Modelo> modelos;
+    
 }
