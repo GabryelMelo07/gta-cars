@@ -3,8 +3,8 @@ package com.gta.cars.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.gta.cars.model.Usuario;
+import com.gta.cars.model.User;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    UserDetails findByNomeUsuario(String nomeUsuario);
+public interface UserRepository extends JpaRepository<User, String> {
+    UserDetails findByLogin(String login);
 }

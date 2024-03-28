@@ -18,8 +18,11 @@ import com.gta.cars.dto.GaragemDTO;
 import com.gta.cars.model.Garagem;
 import com.gta.cars.service.interfaces.GaragemService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/garagem")
+@SecurityRequirement(name = "Bearer Authentication")
 public class GaragemController {
     
     @Autowired
