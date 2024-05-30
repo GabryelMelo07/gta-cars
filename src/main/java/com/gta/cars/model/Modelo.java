@@ -1,5 +1,6 @@
 package com.gta.cars.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,7 +20,7 @@ import lombok.Data;
 @Entity
 @Table(name = "modelo")
 @Data
-public class Modelo {
+public class Modelo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
