@@ -30,14 +30,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(unique = true, nullable = false)
     private String login;
-
+    
+    @Column(nullable = false)
     private String password;
 
     @Column(length = 50, nullable = false)
     private String nome;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String email;
 
     @OneToMany(mappedBy = "user")

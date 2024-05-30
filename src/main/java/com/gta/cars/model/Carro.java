@@ -1,5 +1,7 @@
 package com.gta.cars.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -15,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "carro")
 @Data
-public class Carro {
+public class Carro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
