@@ -1,4 +1,4 @@
-package com.gta.cars.model;
+package com.gta.cars.model.enums;
 
 public enum Classe {
     SUV, // 0

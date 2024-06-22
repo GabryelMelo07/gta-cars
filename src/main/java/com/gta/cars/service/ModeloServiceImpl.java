@@ -24,7 +24,6 @@ public class ModeloServiceImpl implements ModeloService {
         return modeloRepository.findAll(pageable);
     }
 
-    @Cacheable(value = "modelo", key = "#id")
     @Override
     public Modelo getById(long id) {
         return modeloRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Modelo inexistente."));

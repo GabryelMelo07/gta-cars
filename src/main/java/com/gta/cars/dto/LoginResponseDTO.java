@@ -1,4 +1,6 @@
 package com.gta.cars.dto;
 
-public record LoginResponseDTO(String token) {
+import java.time.LocalDateTime;
+
+public record LoginResponseDto(String accessToken, LocalDateTime expiresIn) {
 }

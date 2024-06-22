@@ -24,7 +24,6 @@ public class MarcaServiceImpl implements MarcaService {
         return marcaRepository.findAll(pageable);
     }
 
-    @Cacheable(value = "marca", key = "#id")
     @Override
     public Marca getById(long id) {
         return marcaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Marca inexistente."));

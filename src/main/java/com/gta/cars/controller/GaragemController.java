@@ -1,10 +1,13 @@
 package com.gta.cars.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,19 +21,16 @@ import com.gta.cars.dto.GaragemDTO;
 import com.gta.cars.model.Garagem;
 import com.gta.cars.service.interfaces.GaragemService;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
 @RestController
 @RequestMapping("/garagem")
-@SecurityRequirement(name = "Bearer Authentication")
 public class GaragemController {
     
     @Autowired
     private GaragemService garagemService;
     
     @GetMapping
-    public ResponseEntity<Page<Garagem>> getAll(Pageable pageable) {
-        return ResponseEntity.ok().body(garagemService.getAll(pageable));
+    public ResponseEntity<Page<Garagem>> getGaragensByUser(Pageable pageable, JwtAuthenticationToken token) {
+        return ResponseEntity.ok().body(garagemService.getByUserId(UUID.fromString(token.getName()), pageable));
     }
 
     @GetMapping("/{id}")
@@ -39,8 +39,8 @@ public class GaragemController {
     }
 
     @PostMapping
-    public ResponseEntity<Garagem> save(@RequestBody GaragemDTO garagemDto) {
-        return ResponseEntity.ok().body(garagemService.save(garagemDto));
+    public ResponseEntity<Garagem> save(@RequestBody GaragemDTO garagemDto, JwtAuthenticationToken token) {
+        return ResponseEntity.ok().body(garagemService.save(garagemDto, UUID.fromString(token.getName())));
     }
 
     @PutMapping("/atualizar/{id}")

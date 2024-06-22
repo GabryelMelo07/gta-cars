@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gta.cars.model.enums.Classe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

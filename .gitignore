@@ -33,4 +33,8 @@ build/
 .vscode/
 
 ### Diagram files ###
-.drawio
+*.drawio
+
+# RSA Keys
+*.pub
+*.key
