@@ -1,6 +1,7 @@
 package com.gta.cars.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +43,7 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Override
+    @CacheEvict(value = "garagens", allEntries = true)
     public Carro save(CarroDTO dto) {
         Modelo modelo = modeloService.getById(dto.modeloId());
         Garagem garagem = garagemService.getById(dto.garagemId());
@@ -53,6 +55,7 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Override
+    @CacheEvict(value = "garagens", allEntries = true)
     public Carro update(long id, CarroDTO dto) {
         Modelo modelo = modeloService.getById(dto.modeloId());
         Garagem garagem = garagemService.getById(dto.garagemId());
@@ -64,6 +67,7 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Override
+    @CacheEvict(value = "garagens", allEntries = true)
     public boolean delete(long id) {
         if (carroRepository.existsById(id)) {
             carroRepository.deleteById(id);

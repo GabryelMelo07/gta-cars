@@ -18,11 +18,8 @@ import com.gta.cars.dto.CarroDTO;
 import com.gta.cars.model.Carro;
 import com.gta.cars.service.interfaces.CarroService;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
 @RestController
 @RequestMapping("/carro")
-@SecurityRequirement(name = "Bearer Authentication")
 public class CarroController {
     
     @Autowired

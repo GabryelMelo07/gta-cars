@@ -1,3 +1,8 @@
+INSERT INTO roles (role_id, name) VALUES 
+(1, 'ADMIN'),
+(2, 'BASIC')
+ON CONFLICT (role_id) DO NOTHING;
+
 INSERT INTO marca (nome, inspiracao) VALUES
 ('Albany', 'Cadillac'),
 ('Annis', 'Nissan'),
@@ -49,8 +54,10 @@ INSERT INTO marca (nome, inspiracao) VALUES
 ('Vulcar', 'Volvo'),
 ('Western Company', 'Sikorsky Aircraft Bell Helicopter e Boeing'),
 ('Western Motocycle Company', 'Harley Davidson'),
-('Willard', 'Buick');
+('Willard', 'Buick')
+ON CONFLICT (nome) DO NOTHING;
 
 -- INSERIR MODELOS DOS CARROS.
 INSERT INTO modelo (nome, inspiracao, classe, capacidade, imagem, marca_id) VALUES
-('9F', 'Audi R8', 9, 2, '/src/main/resources/static/assets/imgs/9F-GTAV-front.png', 34);
+('9F', 'Audi R8', 9, 2, '/src/main/resources/static/assets/imgs/9F-GTAV-front.png', 34)
+ON CONFLICT (nome) DO NOTHING;

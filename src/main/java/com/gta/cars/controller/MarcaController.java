@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gta.cars.model.Marca;
 import com.gta.cars.service.interfaces.MarcaService;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
 @RestController
 @RequestMapping("/marca")
-@SecurityRequirement(name = "Bearer Authentication")
 public class MarcaController {
     
     @Autowired

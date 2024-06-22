@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gta.cars.model.Modelo;
 import com.gta.cars.service.interfaces.ModeloService;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-
 @RestController
 @RequestMapping("/modelo")
-@SecurityRequirement(name = "Bearer Authentication")
 public class ModeloController {
     
     @Autowired
