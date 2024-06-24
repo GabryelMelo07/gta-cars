@@ -31,11 +31,11 @@ public class Garagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, unique = true, nullable = false)
+    @Column(length = 100, nullable = false)
     private String nome;
 
-    @Column(length = 150, nullable = false)
-    private String localizacao;
+    @Column(nullable = false)
+    private Integer capacidade;
     
     @Column
     private String imagem;
