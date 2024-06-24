@@ -66,4 +66,5 @@ public class User implements Serializable {
     public boolean isPasswordCorrect(String password, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(password, this.password);
     }
+    
 }

@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gta.cars.model.enums.Classe;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,8 +42,8 @@ public class Modelo implements Serializable {
     @Column
     private Integer capacidade;
 
-    @Column
-    private String imagem;
+    @OneToMany(mappedBy = "modelo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Imagem> imagens;
 
     @ManyToOne
     @JoinColumn(name = "marca_id")

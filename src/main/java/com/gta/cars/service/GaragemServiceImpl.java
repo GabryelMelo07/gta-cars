@@ -40,31 +40,43 @@ public class GaragemServiceImpl implements GaragemService {
     }
 
     @Override
+    public Garagem getById(long id, UUID userId) {
+        Garagem garagem = getById(id);
+
+        if (!garagem.getUser().getId().equals(userId))
+            throw new RuntimeException("Garagem não pertence ao usuário");
+        
+        return garagem;
+    }
+
+    @Override
     @CacheEvict(value = "garagens", allEntries = true)
     public Garagem save(GaragemDTO dto, UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não existe."));
-        Garagem garagem = new Garagem(null, dto.nome(), dto.localizacao(), dto.imagem(), user, new ArrayList<>());
+        Garagem garagem = new Garagem(null, dto.nome(), dto.capacidade(), dto.imagem(), user, new ArrayList<>());
         return garagemRepository.save(garagem);
     }
 
     @Override
     @CacheEvict(value = "garagens", allEntries = true)
-    public Garagem update(long id, GaragemDTO dto) {
+    public Garagem update(long id, GaragemDTO dto, UUID userId) {
         Garagem garagem = getById(id);
         garagem.setNome(dto.nome());
-        garagem.setLocalizacao(dto.localizacao());
+        garagem.setCapacidade(dto.capacidade());
         garagem.setImagem(dto.imagem());
         return garagemRepository.save(garagem);
     }
 
     @Override
     @CacheEvict(value = "garagens", allEntries = true)
-    public boolean delete(long id) {
-        if (garagemRepository.existsById(id)) {
+    public boolean delete(long id, UUID userId) {
+        Garagem garagem = getById(id);
+        
+        if (garagem.getUser().getId().equals(userId)) {
             garagemRepository.deleteById(id);
             return true;
         } else {
-            throw new EntityNotFoundException("Garagem inexistente.");
+            throw new RuntimeException("Garagem não pertence ao usuário.");
         }
     }
     

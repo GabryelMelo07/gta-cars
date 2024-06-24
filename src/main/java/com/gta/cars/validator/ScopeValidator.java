@@ -20,16 +20,11 @@ public class ScopeValidator implements OAuth2TokenValidator<Jwt> {
     
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
-        System.out.println("===============EXECUTANDO ScopeValidator=================");
         List<String> scopes = token.getClaimAsStringList("scope");
 
         if (scopes != null && !scopes.isEmpty()) {
             for (String string : scopes) {
                 Role role = roleRepository.findByNameIgnoreCase(string);
-                System.out.println("===============================");
-                System.out.println(role);
-                System.out.println(string);
-                System.out.println("===============================");
                 if (role != null) {
                     return OAuth2TokenValidatorResult.success();
                 }

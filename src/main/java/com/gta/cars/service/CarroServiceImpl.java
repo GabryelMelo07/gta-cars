@@ -32,7 +32,7 @@ public class CarroServiceImpl implements CarroService {
     
     @Cacheable(value = "carros", key = "'pagina_' + #pageable.pageNumber")
     @Override
-    public Page<Carro> getAll(Pageable pageable) {
+    public Page<Carro> getAll(Pageable pageable) { // REMOVER
         return carroRepository.findAll(pageable);
     }
 
@@ -47,8 +47,12 @@ public class CarroServiceImpl implements CarroService {
     public Carro save(CarroDTO dto) {
         Modelo modelo = modeloService.getById(dto.modeloId());
         Garagem garagem = garagemService.getById(dto.garagemId());
+
+        if (garagem.getCarros().size() == garagem.getCapacidade())
+        throw new RuntimeException("Garagem lotada.");
+        
         Carro carro = new Carro();
-        carro.setImagem(dto.imagem());
+        // carro.setImagem(dto.imagem());
         carro.setModelo(modelo);
         carro.setGaragem(garagem);
         return carroRepository.save(carro);
@@ -60,7 +64,7 @@ public class CarroServiceImpl implements CarroService {
         Modelo modelo = modeloService.getById(dto.modeloId());
         Garagem garagem = garagemService.getById(dto.garagemId());
         Carro carro = getById(id);
-        carro.setImagem(dto.imagem());
+        // carro.setImagem(dto.imagem());
         carro.setModelo(modelo);
         carro.setGaragem(garagem);
         return carroRepository.save(carro);
