@@ -11,7 +11,6 @@ public class ExpiresAtValidator implements OAuth2TokenValidator<Jwt> {
     
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
-        System.out.println("===============EXECUTANDO ExpiresAtValidator=================");
         Instant expiresAt = token.getExpiresAt();
 
         if (expiresAt != null && expiresAt.isAfter(Instant.now()))

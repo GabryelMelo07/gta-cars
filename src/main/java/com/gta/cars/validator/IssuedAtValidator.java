@@ -11,7 +11,6 @@ public class IssuedAtValidator implements OAuth2TokenValidator<Jwt> {
     
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
-        System.out.println("===============EXECUTANDO IssuedAtValidator=================");
         Instant issuedAt = token.getIssuedAt();
 
         if (issuedAt != null && issuedAt.isBefore(Instant.now()))

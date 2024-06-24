@@ -20,9 +20,6 @@ public class SubjectValidator implements OAuth2TokenValidator<Jwt> {
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
         UUID userId = UUID.fromString(token.getSubject());
-        System.out.println("===============EXECUTANDO SubjectValidator=================");
-        System.out.println("userId: " + userId);
-        System.out.println("================================");
 
         if (userRepository.findById(userId).isPresent())
             return OAuth2TokenValidatorResult.success();

@@ -63,7 +63,6 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/register")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> register(@RequestBody CreateUserDto dto) {
         var userFromDb = userRepository.findByUsername(dto.username());
 
@@ -71,13 +70,7 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 
         Set<Role> roles = new HashSet<>();
-
-        for (String roleStr : dto.roles()) {
-            var role = roleRepository.findByNameIgnoreCase(roleStr);
-
-            if (role != null)
-                roles.add(role);
-        }
+        roles.add(roleRepository.findByNameIgnoreCase("basic"));
             
         var user = new User(null, dto.username(), passwordEncoder.encode(dto.password()), dto.email(), dto.nome(), new ArrayList<Garagem>(), roles);
 
@@ -122,7 +115,7 @@ public class AuthController {
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return ResponseEntity.ok(new LoginResponseDto(jwtValue, LocalDateTime.ofInstant(expires, ZoneId.systemDefault())));
+        return ResponseEntity.ok(new LoginResponseDto(jwtValue, LocalDateTime.ofInstant(expires, ZoneId.systemDefault()), user.get()));
     }
 
     @GetMapping("/validate-token")
