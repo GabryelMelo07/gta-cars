@@ -34,8 +34,8 @@ public class GaragemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Garagem> getById(@PathVariable long id) {
-        return ResponseEntity.ok().body(garagemService.getById(id));
+    public ResponseEntity<Garagem> getById(@PathVariable long id, JwtAuthenticationToken token) {
+        return ResponseEntity.ok().body(garagemService.getById(id, UUID.fromString(token.getName())));
     }
 
     @PostMapping
@@ -44,13 +44,13 @@ public class GaragemController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Garagem> update(@PathVariable long id, @RequestBody GaragemDTO garagemDto) {
-        return ResponseEntity.ok().body(garagemService.update(id, garagemDto));
+    public ResponseEntity<Garagem> update(@PathVariable long id, @RequestBody GaragemDTO garagemDto, JwtAuthenticationToken token) {
+        return ResponseEntity.ok().body(garagemService.update(id, garagemDto, UUID.fromString(token.getName())));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable int id) {
-        boolean deletado = garagemService.delete(id);
+    public ResponseEntity<Boolean> delete(@PathVariable int id, JwtAuthenticationToken token) {
+        boolean deletado = garagemService.delete(id, UUID.fromString(token.getName()));
 
         if (deletado)
             return new ResponseEntity<Boolean>(deletado, HttpStatus.OK);

@@ -12,10 +12,12 @@ public interface GaragemService {
     Page<Garagem> getByUserId(UUID userId, Pageable pageable);
 
     Garagem getById(long id);
+    
+    Garagem getById(long id, UUID userId);
 
     Garagem save(GaragemDTO dto, UUID userId);
 
-    Garagem update(long id, GaragemDTO dto);
+    Garagem update(long id, GaragemDTO dto, UUID userId);
 
-    boolean delete(long id);
+    boolean delete(long id, UUID userId);
 }
