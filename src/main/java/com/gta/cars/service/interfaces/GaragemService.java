@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.gta.cars.dto.GaragemDTO;
+import com.gta.cars.dto.GaragemDto;
 import com.gta.cars.model.Garagem;
 
 public interface GaragemService {
@@ -15,9 +15,9 @@ public interface GaragemService {
     
     Garagem getById(long id, UUID userId);
 
-    Garagem save(GaragemDTO dto, UUID userId);
+    Garagem save(GaragemDto dto, UUID userId);
 
-    Garagem update(long id, GaragemDTO dto, UUID userId);
+    Garagem update(long id, GaragemDto dto, UUID userId);
 
     boolean delete(long id, UUID userId);
 }

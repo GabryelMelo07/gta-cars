@@ -3,8 +3,6 @@ package com.gta.cars.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.gta.cars.dto.CarroDTO;
@@ -30,12 +28,6 @@ public class CarroServiceImpl implements CarroService {
     @Autowired
     private GaragemService garagemService;
     
-    @Cacheable(value = "carros", key = "'pagina_' + #pageable.pageNumber")
-    @Override
-    public Page<Carro> getAll(Pageable pageable) { // REMOVER
-        return carroRepository.findAll(pageable);
-    }
-
     @Cacheable(value = "carro", key = "#id")
     @Override
     public Carro getById(long id) {
