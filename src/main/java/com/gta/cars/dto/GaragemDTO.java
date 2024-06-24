@@ -1,4 +1,4 @@
 package com.gta.cars.dto;
 
-public record GaragemDTO(String nome, Integer capacidade, String imagem) {
+public record GaragemDto(String nome, Integer capacidade, String imagem) {
 }

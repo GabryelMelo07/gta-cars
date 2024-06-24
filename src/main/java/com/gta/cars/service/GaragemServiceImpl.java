@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.gta.cars.dto.GaragemDTO;
+import com.gta.cars.dto.GaragemDto;
 import com.gta.cars.model.Garagem;
+import com.gta.cars.model.Role;
 import com.gta.cars.model.User;
 import com.gta.cars.repository.GaragemRepository;
+import com.gta.cars.repository.RoleRepository;
 import com.gta.cars.repository.UserRepository;
 import com.gta.cars.service.interfaces.GaragemService;
 
@@ -27,6 +29,9 @@ public class GaragemServiceImpl implements GaragemService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
     
     @Cacheable(value = "garagens", key = "'user_' + #userId + '_page_' + #pageable.pageNumber")
     @Override
@@ -51,7 +56,7 @@ public class GaragemServiceImpl implements GaragemService {
 
     @Override
     @CacheEvict(value = "garagens", allEntries = true)
-    public Garagem save(GaragemDTO dto, UUID userId) {
+    public Garagem save(GaragemDto dto, UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não existe."));
         Garagem garagem = new Garagem(null, dto.nome(), dto.capacidade(), dto.imagem(), user, new ArrayList<>());
         return garagemRepository.save(garagem);
@@ -59,7 +64,13 @@ public class GaragemServiceImpl implements GaragemService {
 
     @Override
     @CacheEvict(value = "garagens", allEntries = true)
-    public Garagem update(long id, GaragemDTO dto, UUID userId) {
+    public Garagem update(long id, GaragemDto dto, UUID userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+        Role role = roleRepository.findByNameIgnoreCase("admin");
+
+        if (!user.getRoles().contains(role))
+            throw new RuntimeException("Usuário não tem permissão para editar garagens.");
+        
         Garagem garagem = getById(id);
         garagem.setNome(dto.nome());
         garagem.setCapacidade(dto.capacidade());
@@ -71,8 +82,13 @@ public class GaragemServiceImpl implements GaragemService {
     @CacheEvict(value = "garagens", allEntries = true)
     public boolean delete(long id, UUID userId) {
         Garagem garagem = getById(id);
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+        Role role = roleRepository.findByNameIgnoreCase("admin");
         
-        if (garagem.getUser().getId().equals(userId)) {
+        if (garagem.getUser().equals(user)) {
+            garagemRepository.delete(garagem);
+            return true;
+        } else if (user.getRoles().contains(role)) {
             garagemRepository.deleteById(id);
             return true;
         } else {

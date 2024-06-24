@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gta.cars.dto.GaragemDTO;
+import com.gta.cars.dto.GaragemDto;
 import com.gta.cars.model.Garagem;
 import com.gta.cars.service.interfaces.GaragemService;
 
@@ -39,12 +39,12 @@ public class GaragemController {
     }
 
     @PostMapping
-    public ResponseEntity<Garagem> save(@RequestBody GaragemDTO garagemDto, JwtAuthenticationToken token) {
+    public ResponseEntity<Garagem> save(@RequestBody GaragemDto garagemDto, JwtAuthenticationToken token) {
         return ResponseEntity.ok().body(garagemService.save(garagemDto, UUID.fromString(token.getName())));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Garagem> update(@PathVariable long id, @RequestBody GaragemDTO garagemDto, JwtAuthenticationToken token) {
+    public ResponseEntity<Garagem> update(@PathVariable long id, @RequestBody GaragemDto garagemDto, JwtAuthenticationToken token) {
         return ResponseEntity.ok().body(garagemService.update(id, garagemDto, UUID.fromString(token.getName())));
     }
 

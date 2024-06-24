@@ -1,8 +1,6 @@
 package com.gta.cars.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +22,6 @@ public class CarroController {
     
     @Autowired
     private CarroService carroService;
-    
-    @GetMapping
-    public ResponseEntity<Page<Carro>> getAll(Pageable pageable) {
-        return ResponseEntity.ok().body(carroService.getAll(pageable));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Carro> getById(@PathVariable long id) {

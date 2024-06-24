@@ -32,7 +32,7 @@ public class Modelo implements Serializable {
     @Column(length = 100, unique = true, nullable = false)
     private String nome;
 
-    @Column(length = 100)
+    @Column(length = 500)
     private String inspiracao;
 
     @Column
